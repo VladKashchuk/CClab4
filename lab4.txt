@@ -1,0 +1,388 @@
+Microsoft Windows [Version 10.0.19041.685]
+(c) Корпорація Майкрософт (Microsoft Corporation), 2020. Усі права захищені.
+
+C:\Users\Користувач>aws elbv2 create-load-balancer --name lab4 --type application --scheme internet-facing --subnets subnet-2af5b667 subnet-25cc0a14
+{
+    "LoadBalancers": [
+        {
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:331355251771:loadbalancer/app/lab4/bf9d37d820925579",
+            "DNSName": "lab4-1270112046.us-east-1.elb.amazonaws.com",
+            "CanonicalHostedZoneId": "Z35SXDOTRQ7X7K",
+            "CreatedTime": "2020-12-12T12:10:19.200000+00:00",
+            "LoadBalancerName": "lab4",
+            "Scheme": "internet-facing",
+            "VpcId": "vpc-39915e44",
+            "State": {
+                "Code": "provisioning"
+            },
+            "Type": "application",
+            "AvailabilityZones": [
+                {
+                    "SubnetId": "subnet-25cc0a14",
+                    "LoadBalancerAddresses": []
+                },
+                {
+                    "SubnetId": "subnet-2af5b667",
+                    "LoadBalancerAddresses": []
+                }
+            ],
+            "SecurityGroups": [
+                "sg-999cbaa9"
+            ],
+            "IpAddressType": "ipv4"
+        }
+    ]
+}
+
+
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>aws elbv2 delete-load-balancer --load-balancer-arn arn:aws:elasticloadbalancing:us-east-1:331355251771:loadbalancer/app/lab4/bf9d37d820925579
+
+
+C:\Users\Користувач>aws elbv2 create-load-balancer --name lab4 --type application --scheme internet-facing --subnets subnet-2af5b667 subnet-25cc0a14 --security-groups sg-999cbaa9
+{
+    "LoadBalancers": [
+        {
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:331355251771:loadbalancer/app/lab4/4be1275a5f998b1d",
+            "DNSName": "lab4-2086926177.us-east-1.elb.amazonaws.com",
+            "CanonicalHostedZoneId": "Z35SXDOTRQ7X7K",
+            "CreatedTime": "2020-12-12T12:13:40.870000+00:00",
+            "LoadBalancerName": "lab4",
+            "Scheme": "internet-facing",
+            "VpcId": "vpc-39915e44",
+            "State": {
+                "Code": "provisioning"
+            },
+            "Type": "application",
+            "AvailabilityZones": [
+                {
+                    "ZoneName": "us-east-1e",
+                    "SubnetId": "subnet-25cc0a14",
+                    "LoadBalancerAddresses": []
+                },
+                {
+                    "ZoneName": "us-east-1a",
+                    "SubnetId": "subnet-2af5b667",
+                    "LoadBalancerAddresses": []
+                }
+            ],
+            "SecurityGroups": [
+                "sg-999cbaa9"
+            ],
+            "IpAddressType": "ipv4"
+        }
+    ]
+}
+
+
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>aws ec2 authorize-security-group-ingress --group-id sg-999cbaa9 --protocol tcp --port 80 --cidr 0.0.0.0/0
+
+
+C:\Users\Користувач>aws ec2 authorize-security-group-ingress --group-id sg-999cbaa9 --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+
+C:\Users\Користувач>aws elbv2 set-security-groups --load-balancer-arn arn:aws:elasticloadbalancing:us-east-1:331355251771:loadbalancer/app/lab4/4be1275a5f998b1d --security-groups sg-999cbaa9
+{
+    "SecurityGroupIds": [
+        "sg-999cbaa9"
+    ]
+}
+
+
+C:\Users\Користувач>aws ec2 run-instances --image-id ami-04d29b6f966df1537 --count 2 --instance-type t2.micro --key-name VladKey --associate-public-ip-address --security-group-ids sg-999cbaa9
+{
+    "Groups": [],
+    "Instances": [
+        {
+            "AmiLaunchIndex": 0,
+            "ImageId": "ami-04d29b6f966df1537",
+            "InstanceId": "i-0487dd9c01d08a667",
+            "InstanceType": "t2.micro",
+            "KeyName": "VladKey",
+            "LaunchTime": "2020-12-12T12:18:13+00:00",
+            "Monitoring": {
+                "State": "disabled"
+            },
+            "Placement": {
+                "AvailabilityZone": "us-east-1d",
+                "GroupName": "",
+                "Tenancy": "default"
+            },
+            "PrivateDnsName": "ip-172-31-85-192.ec2.internal",
+            "PrivateIpAddress": "172.31.85.192",
+            "ProductCodes": [],
+            "PublicDnsName": "",
+            "State": {
+                "Code": 0,
+                "Name": "pending"
+            },
+            "StateTransitionReason": "",
+            "SubnetId": "subnet-a2249a83",
+            "VpcId": "vpc-39915e44",
+            "Architecture": "x86_64",
+            "BlockDeviceMappings": [],
+            "ClientToken": "6be59b9b-09bd-4c59-a3f2-5302b20076af",
+            "EbsOptimized": false,
+            "EnaSupport": true,
+            "Hypervisor": "xen",
+            "NetworkInterfaces": [
+                {
+                    "Attachment": {
+                        "AttachTime": "2020-12-12T12:18:13+00:00",
+                        "AttachmentId": "eni-attach-0fdfd94ac22a97fe8",
+                        "DeleteOnTermination": true,
+                        "DeviceIndex": 0,
+                        "Status": "attaching"
+                    },
+                    "Description": "",
+                    "Groups": [
+                        {
+                            "GroupName": "default",
+                            "GroupId": "sg-999cbaa9"
+                        }
+                    ],
+                    "Ipv6Addresses": [],
+                    "MacAddress": "12:cd:63:89:f5:d3",
+                    "NetworkInterfaceId": "eni-0a4b623c157776d2c",
+                    "OwnerId": "331355251771",
+                    "PrivateDnsName": "ip-172-31-85-192.ec2.internal",
+                    "PrivateIpAddress": "172.31.85.192",
+                    "PrivateIpAddresses": [
+                        {
+                            "Primary": true,
+                            "PrivateDnsName": "ip-172-31-85-192.ec2.internal",
+                            "PrivateIpAddress": "172.31.85.192"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "Status": "in-use",
+                    "SubnetId": "subnet-a2249a83",
+                    "VpcId": "vpc-39915e44",
+                    "InterfaceType": "interface"
+                }
+            ],
+            "RootDeviceName": "/dev/xvda",
+            "RootDeviceType": "ebs",
+            "SecurityGroups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-999cbaa9"
+                }
+            ],
+            "SourceDestCheck": true,
+            "StateReason": {
+                "Code": "pending",
+                "Message": "pending"
+            },
+            "VirtualizationType": "hvm",
+            "CpuOptions": {
+                "CoreCount": 1,
+                "ThreadsPerCore": 1
+            },
+            "CapacityReservationSpecification": {
+                "CapacityReservationPreference": "open"
+            },
+            "MetadataOptions": {
+                "State": "pending",
+                "HttpTokens": "optional",
+                "HttpPutResponseHopLimit": 1,
+                "HttpEndpoint": "enabled"
+            },
+            "EnclaveOptions": {
+                "Enabled": false
+            }
+        },
+        {
+            "AmiLaunchIndex": 1,
+            "ImageId": "ami-04d29b6f966df1537",
+            "InstanceId": "i-0a3ba1cd85bf7ef09",
+            "InstanceType": "t2.micro",
+            "KeyName": "VladKey",
+            "LaunchTime": "2020-12-12T12:18:13+00:00",
+            "Monitoring": {
+                "State": "disabled"
+            },
+            "Placement": {
+                "AvailabilityZone": "us-east-1d",
+                "GroupName": "",
+                "Tenancy": "default"
+            },
+            "PrivateDnsName": "ip-172-31-94-144.ec2.internal",
+            "PrivateIpAddress": "172.31.94.144",
+            "ProductCodes": [],
+            "PublicDnsName": "",
+            "State": {
+                "Code": 0,
+                "Name": "pending"
+            },
+            "StateTransitionReason": "",
+            "SubnetId": "subnet-a2249a83",
+            "VpcId": "vpc-39915e44",
+            "Architecture": "x86_64",
+            "BlockDeviceMappings": [],
+            "ClientToken": "6be59b9b-09bd-4c59-a3f2-5302b20076af",
+            "EbsOptimized": false,
+            "EnaSupport": true,
+            "Hypervisor": "xen",
+            "NetworkInterfaces": [
+                {
+                    "Attachment": {
+                        "AttachTime": "2020-12-12T12:18:13+00:00",
+                        "AttachmentId": "eni-attach-030a1516fcae73896",
+                        "DeleteOnTermination": true,
+                        "DeviceIndex": 0,
+                        "Status": "attaching"
+                    },
+                    "Description": "",
+                    "Groups": [
+                        {
+                            "GroupName": "default",
+                            "GroupId": "sg-999cbaa9"
+                        }
+                    ],
+                    "Ipv6Addresses": [],
+                    "MacAddress": "12:0d:2b:90:e6:eb",
+                    "NetworkInterfaceId": "eni-06ca3d9bc07f0656b",
+                    "OwnerId": "331355251771",
+                    "PrivateDnsName": "ip-172-31-94-144.ec2.internal",
+                    "PrivateIpAddress": "172.31.94.144",
+                    "PrivateIpAddresses": [
+                        {
+                            "Primary": true,
+                            "PrivateDnsName": "ip-172-31-94-144.ec2.internal",
+                            "PrivateIpAddress": "172.31.94.144"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "Status": "in-use",
+                    "SubnetId": "subnet-a2249a83",
+                    "VpcId": "vpc-39915e44",
+                    "InterfaceType": "interface"
+                }
+            ],
+            "RootDeviceName": "/dev/xvda",
+            "RootDeviceType": "ebs",
+            "SecurityGroups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-999cbaa9"
+                }
+            ],
+            "SourceDestCheck": true,
+            "StateReason": {
+                "Code": "pending",
+                "Message": "pending"
+            },
+            "VirtualizationType": "hvm",
+            "CpuOptions": {
+                "CoreCount": 1,
+                "ThreadsPerCore": 1
+            },
+            "CapacityReservationSpecification": {
+                "CapacityReservationPreference": "open"
+            },
+            "MetadataOptions": {
+                "State": "pending",
+                "HttpTokens": "optional",
+                "HttpPutResponseHopLimit": 1,
+                "HttpEndpoint": "enabled"
+            },
+            "EnclaveOptions": {
+                "Enabled": false
+            }
+        }
+    ],
+    "OwnerId": "331355251771",
+    "ReservationId": "r-0d505b61ce19da45d"
+}
+
+
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>
+C:\Users\Користувач>aws elbv2 create-target-group --name lab4-Target-Group --target-type instance --protocol HTTP --port 80 --vpc-id vpc-39915e44
+{
+    "TargetGroups": [
+        {
+            "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:331355251771:targetgroup/lab4-Target-Group/d844e1a8ccf9e6c3",            "TargetGroupName": "lab4-Target-Group",
+            "Protocol": "HTTP",
+            "Port": 80,
+            "VpcId": "vpc-39915e44",
+            "HealthCheckProtocol": "HTTP",
+            "HealthCheckPort": "traffic-port",
+            "HealthCheckEnabled": true,
+            "HealthCheckIntervalSeconds": 30,
+            "HealthCheckTimeoutSeconds": 5,
+            "HealthyThresholdCount": 5,
+            "UnhealthyThresholdCount": 2,
+            "HealthCheckPath": "/",
+            "Matcher": {
+                "HttpCode": "200"
+            },
+            "TargetType": "instance",
+            "ProtocolVersion": "HTTP1"
+        }
+    ]
+}
+
+
+C:\Users\Користувач>aws elbv2 register-targets --target-group-arn arn:aws:elasticloadbalancing:us-east-1:331355251771:targetgroup/lab4-Target-Group/d844e1a8ccf9e6c3 --targets Id=i-0487dd9c01d08a667 Id=i-0a3ba1cd85bf7ef09
+
+
+C:\Users\Користувач>aws elbv2 create-listener --load-balancer-arn arn:aws:elasticloadbalancing:us-east-1:331355251771:loadbalancer/app/lab4/4be1275a5f998b1d --protocol HTTP --port 80 --default-actions Type=forward,TargetGroupArn=arn:aws:elasticloadbalancing:us-east-1:331355251771:targetgroup/lab4-Target-Group/d844e1a8ccf9e6c3
+{
+    "Listeners": [
+        {
+            "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:331355251771:listener/app/lab4/4be1275a5f998b1d/b4932006e64452cb",
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:331355251771:loadbalancer/app/lab4/4be1275a5f998b1d",
+            "Port": 80,
+            "Protocol": "HTTP",
+            "DefaultActions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:331355251771:targetgroup/lab4-Target-Group/d844e1a8ccf9e6c3",
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:331355251771:targetgroup/lab4-Target-Group/d844e1a8ccf9e6c3",
+                                "Weight": 1
+                            }
+                        ],
+                        "TargetGroupStickinessConfig": {
+                            "Enabled": false
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+
+C:\Users\Користувач>
